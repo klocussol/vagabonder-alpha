@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Vagabonder" basedir=".">
+
+	<target name="build" description="builds the package" depends="clean, prepare">
+		
+	</target>
+
+	<target name="clean">
+		<delete dir="${basedir}/build" />
+	</target>
+
+	<target name="prepare">
+		<mkdir dir="${basedir}/build" />
+	</target>
+
+</project>
