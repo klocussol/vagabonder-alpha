@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Vagabonder-composer" basedir="../">
+
+	<target name="composer:update" depends="composer:setup" description="Updates all required and development composer dependencies and composer.lock">
+		<exec dir="${basedir}/build-deploy/" executable="php" failonerror="true">
+			<arg value="composer.phar" />
+			<arg value="update" />
+			<arg value="--dev" />
+		</exec>
+	</target>
+
+	<target name="composer:install" depends="composer:setup" description="Installs all required and devlopment compser dependencies">
+		<exec dir="${basedir}/build-deploy/" executable="php" failonerror="true">
+			<arg value="composer.phar" />
+			<arg value="install" />
+			<arg value="--dev" />
+		</exec>
+	</target>
+
+	<target name="composer:setup" depends="-check-composer-binary" unless="composer.exists" description="Downloads composer.phar if not present for use in dependency management">
+		<exec dir="${basedir}/build-deploy/" executable="sh" failonerror="true">
+			<arg value="composer-setup.sh" />
+		</exec>
+	</target>
+
+	<target name="-check-composer-binary">
+		<available property="composer.exists" file="${basedir}/build-deploy/composer.phar" />
+	</target>
+
+</project>
