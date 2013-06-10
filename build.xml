@@ -8,7 +8,7 @@
 	</target>
 
 	<target name="clean">
-		<delete dir="${basedir}/build" /> <!-- deletes a folder called build in our base directory? -->
+		<delete dir="${basedir}/build" />
 	</target>
 
 	<target name="prepare">
@@ -21,6 +21,18 @@
 			<arg value="--config=${basedir}/build-deploy/behat.yml" />
 			<arg value="--format=html,progress" />
 			<arg value="--out=build/logs/behat.html," />
+		</exec>
+	</target>
+
+	<target name="phpstart" description="Automates the starting of the PHP server">
+		<exec dir="${basedir}/public" executable="php">
+			<arg value="-S=localhost:8000"/>
+		</exec>
+	</target>
+
+	<target name="newtab" description="Opens new tab in terminal">
+		<exec dir="${basedir}" executable="${basedir}">
+			<arg value="osascript -e '$CMD_ACTIVATE' -e '$CMD_NEWTAB'" />
 		</exec>
 	</target>
 
