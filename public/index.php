@@ -1,2 +1,1 @@
-<?php
-phpinfo();
+<p>I am awesome!</p>
