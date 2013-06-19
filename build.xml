@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Vagabonder" basedir=".">
 
+	<import file="build-deploy/composer.xml" />
+
 	<target name="build" description="builds the package" depends="clean, prepare">
-		
+
 	</target>
 
 	<target name="clean">
@@ -10,7 +12,28 @@
 	</target>
 
 	<target name="prepare">
-		<mkdir dir="${basedir}/build" />
+		<mkdir dir="${basedir}/build/logs" />
+	</target>
+
+	<target name="behat" description="Run system tests with behat except those requiring javascript interaction." depends="prepare">
+		<exec dir="${basedir}" executable="${basedir}/bin/behat" failonerror="true">
+			<arg value="--tags=~@javascript" />
+			<arg value="--config=${basedir}/build-deploy/behat.yml" />
+			<arg value="--format=html,progress" />
+			<arg value="--out=build/logs/behat.html," />
+		</exec>
+	</target>
+
+	<target name="phpstart" description="Automates the starting of the PHP server">
+		<exec dir="${basedir}/public" executable="php">
+			<arg value="-S=localhost:8000"/>
+		</exec>
+	</target>
+
+	<target name="newtab" description="Opens new tab in terminal">
+		<exec dir="${basedir}" executable="${basedir}">
+			<arg value="osascript -e '$CMD_ACTIVATE' -e '$CMD_NEWTAB'" />
+		</exec>
 	</target>
 
 </project>
