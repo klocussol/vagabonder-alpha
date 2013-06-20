@@ -30,9 +30,12 @@
 		</exec>
 	</target>
 
-	<target name="newtab" description="Opens new tab in terminal">
-		<exec dir="${basedir}" executable="${basedir}">
-			<arg value="osascript -e '$CMD_ACTIVATE' -e '$CMD_NEWTAB'" />
+	<target name="phpunit" description="Run all module unit test with PHPUnit">
+		<exec dir="${basedir}" executable="${basedir}/bin/phpunit" failonerror="true">
+			<arg value="--strict" />
+			<arg value="--coverage-html" />
+			<arg path="${basedir}/build/logs/coverage/unit" />
+			<arg value="test/unit" />
 		</exec>
 	</target>
 

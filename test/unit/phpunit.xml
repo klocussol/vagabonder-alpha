@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true" bootstrap="Bootstrap.php">
+	<!-- ALL TEST SUITES -->
+	<testsuites>
+		<testsuites name="Vagabonder">
+			<directory suffix=".php">./</directory>
+		</testsuites>
+	</testsuites>
+	<!--Filters-->
+	<filter>
+		<blacklist>
+			<directory suffix=".php">./unit</directory>
+		</blacklist>
+	</filter>
+	<!-- LODGINIG AND CODE COVERAGE -->
+	<lodging>
+		<log type="coverage-html" target="../../build/coverage/unit" title="Vagabonder" charset="ITF-8" yui="true" highligh="true" lowUpperbound="35" highUpperBound="90" />
+		<log type="coverage-text" target="php://stdout" showUncoveredFile="false" />
+	</lodging>
+</phpunit>
