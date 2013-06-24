@@ -9,7 +9,6 @@ class VagabondTest extends \PHPUnit_Framework_TestCase
 	const VALID_NAME = "Kyoko";
 	const VALID_AGE = 25;
 	const VALID_GENDER = "Female";
-	const VALID_MAIN_LANGUAGE = "English";
 
 	private $validBirhday = null; 
 	private $currentDate = null;
@@ -24,7 +23,7 @@ class VagabondTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function initializeWithValidData() 
 	{
-		$vagabond = new Vagabond(self::VALID_NAME, $this->validBirthday, self::VALID_GENDER, self::VALID_MAIN_LANGUAGE);
+		$vagabond = new Vagabond(self::VALID_NAME, $this->validBirthday, self::VALID_GENDER);
 		$this->assertInstanceOf("Vagabonder\Domain\Vagabond", $vagabond, "instanceOf");
 		$this->assertEquals(self::VALID_NAME, $vagabond->getName(), "getName");
 		$this->assertEquals(self::VALID_AGE, $vagabond->getAge($this->currentDate), "getAge");
@@ -34,42 +33,9 @@ class VagabondTest extends \PHPUnit_Framework_TestCase
 	/**
 	 *@test
 	 */
-	public function accessLanguages() {
-		$vagabond = new Vagabond(self::VALID_NAME, $this->validBirthday, self::VALID_GENDER, self::VALID_MAIN_LANGUAGE);
-		$this->assertTrue(is_array($vagabond->getLanguages()), "not an array");
-		$this->assertContains(self::VALID_MAIN_LANGUAGE, $vagabond->getLanguages(), "getLanguages");
-		$this->assertEquals(1, count($vagabond->getLanguages()), "Wrong array lenght");
-	}
-
-	/**
-	 *@test
-	 */
-	public function doesVagabondSpeak() {
-		$vagabond = new Vagabond(self::VALID_NAME, $this->validBirthday, self::VALID_GENDER, self::VALID_MAIN_LANGUAGE);
-		$vagabond->addLanguage("French")->addLanguage("Spanish");
-		$this->assertTrue($vagabond->doesSpeak("French"));
-		$this->assertFalse($vagabond->doesSpeak("Japanese"));
-	}
-
-	/**
-	 *@test
-	 */
-	public function canAddAdditionalLanguages() 
-	{
-		$vagabond = new Vagabond(self::VALID_NAME, $this->validBirthday, self::VALID_GENDER, self::VALID_MAIN_LANGUAGE);
-		$vagabond->addLanguage("French");
-		$this->assertContains(self::VALID_MAIN_LANGUAGE, $vagabond->getLanguages(), "getLanguages");
-		$this->assertContains("French", $vagabond->getLanguages(), "getLanguages");
-
-
-	}
-
-	/**
-	 *@test
-	 */
 	public function checkAge()
 	{
-		$vagabond = new Vagabond("Jason", new \DateTime("06/08/1985"), "Male", self::VALID_MAIN_LANGUAGE);
+		$vagabond = new Vagabond("Jason", new \DateTime("06/08/1985"), "Male");
 
 		$this->assertEquals(28, $vagabond->getAge($this->currentDate), "getAge");
 	}
@@ -81,7 +47,58 @@ class VagabondTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function handleInvalidAge()
 	{
-		$vagabond = new Vagabond("Jason", "06/08/1985", "Male", self::VALID_MAIN_LANGUAGE);
+		$vagabond = new Vagabond("Jason", "06/08/1985", "Male");
+	}
+
+	/**
+	 *@test
+	 */
+	public function accessLanguages() {
+		//precondition
+		$vagabond = new Vagabond(self::VALID_NAME, $this->validBirthday, self::VALID_GENDER);
+		
+		//action
+		$vagabond->addLanguage("English", 10)->addLanguage("French", 8);
+		$languageList = $vagabond->getLanguages();
+		$result = $languageList[0];
+
+		//assertion
+		$this->assertTrue(is_array($languageList), "not an array");
+		$this->assertInstanceOf("Vagabonder\Domain\Language", $result, "instanceOf");
+		$this->assertEquals(2, count($languageList), "Wrong array lenght");
+	}
+
+	/**
+	 *@test
+	 */
+	public function doesVagabondSpeak() {
+		//precondition
+		$vagabond = new Vagabond(self::VALID_NAME, $this->validBirthday, self::VALID_GENDER);
+		
+		//action
+		$vagabond->addLanguage("French", 8)->addLanguage("Spanish", 6);
+		
+		//assertion
+		$this->assertTrue($vagabond->doesSpeak("French"));
+		$this->assertFalse($vagabond->doesSpeak("Japanese"));
+	}
+
+	/**
+	 *@test
+	 */
+	public function canAddAdditionalLanguages() 
+	{
+		//precondition
+		$vagabond = new Vagabond(self::VALID_NAME, $this->validBirthday, self::VALID_GENDER);
+		
+		//action
+		$vagabond->addLanguage("English", 10)->addLanguage("French", 8);
+		$languageList = $vagabond->getLanguages();
+		
+		//assertion
+		$this->assertEquals("English", $languageList[0]->getLanguageName(), "Not english");
+		$this->assertEquals(10, $languageList[0]->getLanguageProficiency(), "Not the correct proficiency");
+		$this->assertEquals("French", $languageList[1]->getLanguageName(), "Not french");
 	}
 
 	/**
@@ -92,7 +109,7 @@ class VagabondTest extends \PHPUnit_Framework_TestCase
 	public function handleInvalidCanSpeakWithArgument()
 	{	
 		//precondition
-		$thisFool = new Vagabond("This fool", new \DateTime("06/08/1985"), "Male", self::VALID_MAIN_LANGUAGE);
+		$thisFool = new Vagabond("This fool", new \DateTime("06/08/1985"), "Male");
 		//action
 		$thisFool->canSpeakWith("Kyoko");
 	}
@@ -103,14 +120,44 @@ class VagabondTest extends \PHPUnit_Framework_TestCase
 	public function validCanSpeakWith()
 	{
 		//precondition
-		$jason = new Vagabond("Jason", new \DateTime("06/08/1985"), "Male", self::VALID_MAIN_LANGUAGE);
-		$kyoko = new Vagabond("Jason", new \DateTime("05/10/1988"), "Female", self::VALID_MAIN_LANGUAGE);
+		$jason = new Vagabond("Jason", new \DateTime("06/08/1985"), "Male");
+		$kyoko = new Vagabond(self::VALID_NAME, $this->validBirthday, self::VALID_GENDER);
+		$chris = new Vagabond("Chris", $this->validBirthday, "Male");
+		$kyoko->addLanguage("English", 8)->addLanguage("Spanish", 5)->addLanguage("French", 6);
+		$jason->addLanguage("English", 2)->addLanguage("Italian", 4)->addLanguage("French", 10);
+		$chris->addLanguage("Arabic", 5)->addLanguage("Japanese", 8);
 
 		//action
 		$result = $jason->canSpeakWith($kyoko);
+		$result2 = $chris->canSpeakWith($kyoko);
 
 		//assertion
-		$this->assertTrue($result);
+		$this->assertEquals("French", $result, "canSpeakWith");
+		$this->assertFalse($result2, "Shouldn't be able to speak to each other");
+	}
+
+	/**
+	 *@test
+	 */
+	public function initializeLanguages()
+	{
+		//precondition
+		$language = new Language("French", 8);
+		
+		//assertion
+		$this->assertInstanceOf("Vagabonder\Domain\Language", $language, "instanceOf");
+		$this->assertEquals("French", $language->getLanguageName(), "getLanguageName");
+		$this->assertEquals(8, $language->getLanguageProficiency(), "getLanguageProficiency");
+	}
+
+	/**
+	 *@test
+	 *@expectedException \InvalidArgumentException
+	 *@expectedExceptionMessage Rate your proficiency on a scale from 1 to 10
+	 */
+	public function handleInvalidLanguageProficiency()
+	{
+		$languages = new Language("Japanese", 40);
 	}
 
 	/**
