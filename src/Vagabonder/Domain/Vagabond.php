@@ -2,6 +2,8 @@
 
 namespace Vagabonder\Domain;
 
+use Vagabonder\Domain\Vagabond\Language;
+
 class Vagabond
 {
 	private $name = null;
@@ -42,9 +44,8 @@ class Vagabond
 		return $this->languages;
 	}
 
-	public function addLanguage($name, $proficiency) 
+	public function addLanguage($language) 
 	{
-		$language = new Language($name, $proficiency);
 		$this->languages[] = $language;
 		return $this;
 	}
@@ -62,8 +63,6 @@ class Vagabond
 	{
 		$commonLanguages = array();
 		$commonLanguagesProficiency = array();
-		$maximum = 0;
-		$index = 0;
 
 		if(! $otherVagabond instanceof Vagabond) {
 			throw new \InvalidArgumentException("Instance of Vagabond class not found");
@@ -83,31 +82,5 @@ class Vagabond
 		}
 		
 		return false;
-	}
-}
-
-class Language 
-{
-	private $name = null;
-	private $proficiency = null;
-
-	public function __construct($name, $proficiency)
-	{
-		if($proficiency < 1 || $proficiency > 10) {
-			throw new \InvalidArgumentException("Rate your proficiency on a scale from 1 to 10");
-		}
-
-		$this->name = $name;
-		$this->proficiency = $proficiency;
-	}
-
-	public function getLanguageName() 
-	{
-		return $this->name;
-	}
-
-	public function getLanguageProficiency()
-	{
-		return $this->proficiency;
 	}
 }

@@ -3,6 +3,7 @@
 namespace Vagabonder\Domain;
 
 use Vagabonder\Domain\Vagabond;
+use Vagabonder\Domain\Vagabond\Language;
 
 class VagabondTest extends \PHPUnit_Framework_TestCase 
 {	
@@ -11,7 +12,7 @@ class VagabondTest extends \PHPUnit_Framework_TestCase
 	const VALID_GENDER = "Female";
 
 	private $validBirhday = null; 
-	private $currentDate = null;
+	private $currentDate = null; 
 
 	protected function setup() 
 	{
@@ -56,15 +57,17 @@ class VagabondTest extends \PHPUnit_Framework_TestCase
 	public function accessLanguages() {
 		//precondition
 		$vagabond = new Vagabond(self::VALID_NAME, $this->validBirthday, self::VALID_GENDER);
+		$english = new Language("English", 10);
+		$french = new Language("French", 8);
 		
 		//action
-		$vagabond->addLanguage("English", 10)->addLanguage("French", 8);
+		$vagabond->addLanguage($english)->addLanguage($french);
 		$languageList = $vagabond->getLanguages();
 		$result = $languageList[0];
 
 		//assertion
 		$this->assertTrue(is_array($languageList), "not an array");
-		$this->assertInstanceOf("Vagabonder\Domain\Language", $result, "instanceOf");
+		$this->assertInstanceOf("Vagabonder\Domain\Vagabond\Language", $result, "instanceOf");
 		$this->assertEquals(2, count($languageList), "Wrong array lenght");
 	}
 
@@ -74,9 +77,11 @@ class VagabondTest extends \PHPUnit_Framework_TestCase
 	public function doesVagabondSpeak() {
 		//precondition
 		$vagabond = new Vagabond(self::VALID_NAME, $this->validBirthday, self::VALID_GENDER);
+		$english = new Language("English", 10);
+		$french = new Language("French", 8);
 		
 		//action
-		$vagabond->addLanguage("French", 8)->addLanguage("Spanish", 6);
+		$vagabond->addLanguage($french)->addLanguage($english);
 		
 		//assertion
 		$this->assertTrue($vagabond->doesSpeak("French"));
@@ -90,9 +95,11 @@ class VagabondTest extends \PHPUnit_Framework_TestCase
 	{
 		//precondition
 		$vagabond = new Vagabond(self::VALID_NAME, $this->validBirthday, self::VALID_GENDER);
-		
+		$english = new Language("English", 10);
+		$french = new Language("French", 8);
+
 		//action
-		$vagabond->addLanguage("English", 10)->addLanguage("French", 8);
+		$vagabond->addLanguage($english)->addLanguage($french);
 		$languageList = $vagabond->getLanguages();
 		
 		//assertion
@@ -123,9 +130,15 @@ class VagabondTest extends \PHPUnit_Framework_TestCase
 		$jason = new Vagabond("Jason", new \DateTime("06/08/1985"), "Male");
 		$kyoko = new Vagabond(self::VALID_NAME, $this->validBirthday, self::VALID_GENDER);
 		$chris = new Vagabond("Chris", $this->validBirthday, "Male");
-		$kyoko->addLanguage("English", 8)->addLanguage("Spanish", 5)->addLanguage("French", 6);
-		$jason->addLanguage("English", 2)->addLanguage("Italian", 4)->addLanguage("French", 10);
-		$chris->addLanguage("Arabic", 5)->addLanguage("Japanese", 8);
+		
+
+		$kyoko->addLanguage($this->getLanguage("Spanish", 4))
+		      ->addLanguage($this->getLanguage("English", 9))
+			  ->addLanguage($this->getLanguage("French", 7));
+		$jason->addLanguage($this->getLanguage("Italian", 8))
+			  ->addLanguage($this->getLanguage("French", 6));
+		$chris->addLanguage($this->getLanguage("Arabic", 6))
+			  ->addLanguage($this->getLanguage("Japanese", 5));
 
 		//action
 		$result = $jason->canSpeakWith($kyoko);
@@ -136,28 +149,9 @@ class VagabondTest extends \PHPUnit_Framework_TestCase
 		$this->assertFalse($result2, "Shouldn't be able to speak to each other");
 	}
 
-	/**
-	 *@test
-	 */
-	public function initializeLanguages()
+	private function getLanguage($languageName, $languageProficiency) 
 	{
-		//precondition
-		$language = new Language("French", 8);
-		
-		//assertion
-		$this->assertInstanceOf("Vagabonder\Domain\Language", $language, "instanceOf");
-		$this->assertEquals("French", $language->getLanguageName(), "getLanguageName");
-		$this->assertEquals(8, $language->getLanguageProficiency(), "getLanguageProficiency");
-	}
-
-	/**
-	 *@test
-	 *@expectedException \InvalidArgumentException
-	 *@expectedExceptionMessage Rate your proficiency on a scale from 1 to 10
-	 */
-	public function handleInvalidLanguageProficiency()
-	{
-		$languages = new Language("Japanese", 40);
+		return new Language($languageName, $languageProficiency);
 	}
 
 	/**
