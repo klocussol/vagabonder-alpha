@@ -111,6 +111,18 @@ class VagabondTest extends \PHPUnit_Framework_TestCase
 	/**
 	 *@test
 	 *@expectedException \InvalidArgumentException
+	 *@expectedExceptionMessage Instance of Language class not found
+	 */
+	public function handleInvalidAddLanguageArgument()
+	{
+		$vagabond = new Vagabond("Jason", new \DateTime("06/08/1985"), "Male");
+
+		$vagabond->addLanguage("English");
+	}
+
+	/**
+	 *@test
+	 *@expectedException \InvalidArgumentException
 	 *@expectedExceptionMessage Instance of Vagabond class not found
 	 */
 	public function handleInvalidCanSpeakWithArgument()

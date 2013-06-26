@@ -44,8 +44,12 @@ class Vagabond
 		return $this->languages;
 	}
 
-	public function addLanguage($language) 
+	public function addLanguage($language)
 	{
+		if(! $language instanceof Language) {
+			throw new \InvalidArgumentException("Instance of Language class not found");
+		}
+
 		$this->languages[] = $language;
 		return $this;
 	}
