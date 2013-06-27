@@ -4,6 +4,8 @@ namespace Vagabonder\Domain;
 
 use Vagabonder\Domain\Trip;
 use Vagabonder\Domain\Location;
+use Vagabonder\Domain\Trip\Itinerary;
+use Vagabonder\Domain\Trip\Itinerary\ItineraryItem;
 
 class TripTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,57 +25,43 @@ class TripTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function initializeTripWithValidData() 
 	{
-		$trip = new Trip(self::VALID_TRIP_NAME, $this->validLocation, $this->validStartDate, $this->validEndDate);
-		$location = $this->validLocation;
+		$trip = new Trip(self::VALID_TRIP_NAME);
 
 		$this->assertInstanceOf("Vagabonder\Domain\Trip", $trip, "instanceOf");
-		$this->assertInstanceOf("Vagabonder\Domain\Location", $location, "instanceOf");
 		$this->assertEquals(self::VALID_TRIP_NAME, $trip->getTripName(), "getTripName");
-		$this->assertEquals("Kingston", $location->getCity(), "getCity");
-		$this->assertEquals("Jamaica", $location->getCountry(), "getCountry");
-		$this->assertEquals($this->validStartDate, $trip->getStartDate(), "getStartDate");
-		$this->assertEquals($this->validEndDate, $trip->getEndDate(), "getEndDate");
 	}
 
 	/**
 	 *@test
-	 *@expectedException \InvalidArgumentException
-	 *@expectedExceptionMessage Instance of DateTime class not found
 	 */
-	public function handleInvalidStartDateArgument()
+	public function setValidItinerary()
 	{
-		$trip = new Trip(self::VALID_TRIP_NAME, $this->validLocation, "06/24/2013", $this->validEndDate);
-	}
+		$trip = new Trip(self::VALID_TRIP_NAME);
+		$itinerary = $this->getValidItinerary();
 
-	/**
-	 *@test
-	 *@expectedException \InvalidArgumentException
-	 *@expectedExceptionMessage Instance of DateTime class not found
-	 */
-	public function handleInvalidEndDateArgument()
-	{
-		$trip = new Trip(self::VALID_TRIP_NAME, $this->validLocation, $this->validStartDate, "07/14/2013");
-	}
+		$trip->setItinerary($itinerary);
 
-	/**
-	 *@test
-	 *@expectedException \InvalidArgumentException
-	 *@expectedExceptionMessage Instance of Location class not found
-	 */
-	public function handleInvalidLocationArgument()
-	{
-		$trip = new Trip(self::VALID_TRIP_NAME, "Kingston, Jamaice", $this->validStartDate, $this->validEndDate);
+		$this->assertEquals($itinerary, $trip->getItinerary(), "setAndGetItinerary");
 	}
 
 	/**
 	 *@test
 	 */
 	public function setValidBudget() {
-		$trip = new Trip(self::VALID_TRIP_NAME, $this->validLocation, $this->validStartDate, $this->validEndDate);
+		$trip = new Trip(self::VALID_TRIP_NAME);
 
 		$result = $trip->setBudget(600);
 
 		$this->assertEquals(600, $trip->getBudget(), "setBudget");
+	}
+
+	private function getValidItinerary()
+	{
+		$location = new Location("Kingston", "Jamaica");
+		$itineraryItem = new ItineraryItem($this->validStartDate, $this->validEndDate, $location);
+		
+		return new Itinerary($itineraryItem);
+
 	}
 
 	/**
