@@ -27,6 +27,34 @@ class Itinerary
 		}
 
 		$this->itineraryDetails[] = $itineraryItem;
+		
+		
 		return $this;
 	}
+
+	public function sortItineraryItems()
+	{
+		$itineraryList = $this->itineraryDetails;
+		$orderedList = array();
+		$startDates = array();
+
+		foreach ($itineraryList as $itineraryItem) {
+			$startDates[] = $itineraryItem->getStartDate();
+		}
+
+		foreach ($itineraryList as $itineraryItem) {
+			$endDates[] = $itineraryItem->getEndDate();
+		}
+
+		while(count($itineraryList) > 0) {
+			$orderedList[] = $itineraryList[array_search(min($startDates), $startDates)];
+			
+			array_splice($itineraryList, array_search(min($startDates), $startDates), 1);
+			array_splice($startDates, array_search(min($startDates), $startDates),1);
+		}
+
+		$this->itineraryDetails = $orderedList;
+	}
+
+
 }

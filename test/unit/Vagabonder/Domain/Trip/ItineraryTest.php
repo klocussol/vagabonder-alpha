@@ -14,7 +14,7 @@ class ItineraryTest extends \PHPUnit_Framework_TestCase
 	public function setup()
 	{
 		$this->validStartDate = new \DateTime("09/12/2013");
-		$this->validEndDate = new \DateTime("09/29/2013");
+		$this->validEndDate = new \DateTime("09/15/2013");
 	}
 
 	/**
@@ -24,6 +24,7 @@ class ItineraryTest extends \PHPUnit_Framework_TestCase
 	{
 		//precondition
 		$itinerary = $this->getValidItinerary();
+
 		//assertion
 		$this->assertInstanceOf("Vagabonder\Domain\Trip\Itinerary", $itinerary, "instanceOf");
 	}
@@ -50,7 +51,7 @@ class ItineraryTest extends \PHPUnit_Framework_TestCase
 	{
 		//precondition
 		$itinerary = $this->getValidItinerary();
-		$itineraryItem1 = new ItineraryItem($this->getDateTime("09/12/2013"), $this->getDateTime("09/16/2013"), $this->getLocation("Kingston", "Jamaica"));
+		$itineraryItem1 = new ItineraryItem($this->getDateTime("09/12/2013"), $this->getDateTime("09/16/2013"), $this->getLocation("Long Bay", "Jamaica"));
 
 		//action
 		$result = $itinerary->addItineraryItem($itineraryItem1);
@@ -74,7 +75,29 @@ class ItineraryTest extends \PHPUnit_Framework_TestCase
 		$result = $itinerary->addItineraryItem("Some details about my trip");
 	}
 
-	
+	/**
+	 *@test
+	 */
+	public function testSortItineraryItems()
+	{
+		//precondition
+		$itinerary = $this->getValidItinerary();
+		$itineraryItem = new ItineraryItem($this->validStartDate, $this->validEndDate, new Location("Kingston", "Jamaica"));
+		$itineraryItem1 = new ItineraryItem($this->getDateTime("09/19/2013"), $this->getDateTime("09/23/2013"), $this->getLocation("Long Bay", "Jamaica"));
+		$itineraryItem2 = new ItineraryItem($this->getDateTime("09/16/2013"), $this->getDateTime("09/18/2013"), $this->getLocation("Blue Mountains", "Jamaica"));
+
+		//action
+		$result = $itinerary->addItineraryItem($itineraryItem1)->addItineraryItem($itineraryItem2);
+		$itinerary->sortItineraryItems();
+		$orderedList = $itinerary->getItineraryDetails();
+
+		//assertion
+		$this->assertEquals($itineraryItem, $orderedList[0], "sortItineraryItems");
+		$this->assertEquals($itineraryItem2, $orderedList[1], "sortItineraryItems");
+		$this->assertEquals($itineraryItem1, $orderedList[2], "sortItineraryItems");
+	}
+
+	//Helper Methods
 	private function getValidItinerary()
 	{
 		$location = new Location("Kingston", "Jamaica");

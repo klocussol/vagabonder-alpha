@@ -55,13 +55,46 @@ class TripTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(600, $trip->getBudget(), "setBudget");
 	}
 
+	/**
+	 *@test
+	 */
+	public function testGetTripDuration()
+	{
+		//precondition
+		$trip = new Trip(self::VALID_TRIP_NAME);
+		$location = new Location("Kingston", "Jamaica");
+		$itineraryItem = new ItineraryItem(new \DateTime("09/12/2013"), new \DateTime("09/15/2013"), $location);
+		$itinerary = new Itinerary($itineraryItem);
+		$itineraryItem1 = new ItineraryItem($this->getDateTime("09/19/2013"), $this->getDateTime("09/23/2013"), $this->getLocation("Long Bay", "Jamaica"));
+		$itineraryItem2 = new ItineraryItem($this->getDateTime("09/16/2013"), $this->getDateTime("09/18/2013"), $this->getLocation("Blue Mountains", "Jamaica"));
+		$result = $itinerary->addItineraryItem($itineraryItem1)->addItineraryItem($itineraryItem2);
+		$itinerary->sortItineraryItems();
+		$trip->setItinerary($itinerary);
+
+		//action
+		$duration = $trip->getTripDuration();
+
+		//assertion
+		$this->assertEquals(12, $duration, "getTripDuration");
+	}
+
+	//Helper Methods
 	private function getValidItinerary()
 	{
 		$location = new Location("Kingston", "Jamaica");
 		$itineraryItem = new ItineraryItem($this->validStartDate, $this->validEndDate, $location);
 		
 		return new Itinerary($itineraryItem);
+	}
 
+	private function getDateTime($date)
+	{
+		return new \DateTime($date);
+	}
+
+	private function getLocation($city, $country)
+	{
+		return new Location($city, $country);
 	}
 
 	/**

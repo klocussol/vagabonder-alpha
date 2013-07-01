@@ -63,6 +63,16 @@ class ItineraryItemTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 *@test
+	 *@expectedException \InvalidArgumentException
+	 *@expectedExceptionMessage End date cannot be before start date
+	 */
+	public function handleInvalidDateIntervalArgument()
+	{
+		$itineraryItem = new ItineraryItem($this->validEndDate, $this->validStartDate, $this->validLocation);
+	}
+
+	/**
+	 *@test
 	 */
 	public function testGetItineraryItemStartDate()
 	{
@@ -121,7 +131,7 @@ class ItineraryItemTest extends \PHPUnit_Framework_TestCase
 
 		//assertion
 		$this->assertTrue(is_array($activityList), "not an array");
-		$this->assertEquals("Sting Festival", $activityList[0], "getActivityList");
+		$this->assertEquals(0, count($activityList), "getActivityList");
 	}	
 
 	/**
@@ -133,7 +143,7 @@ class ItineraryItemTest extends \PHPUnit_Framework_TestCase
 		$itineraryItem = new ItineraryItem($this->validStartDate, $this->validEndDate, $this->validLocation);
 
 		//action
-		$itineraryItem->addActivity("Trench Town Tour")->addActivity("Bob Marley Museum");
+		$itineraryItem->addActivity("Sting Festival")->addActivity("Trench Town Tour")->addActivity("Bob Marley Museum");
 		$result = $itineraryItem->getActivityList();
 
 		//assertion

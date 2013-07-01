@@ -18,6 +18,10 @@ class ItineraryItem
 			throw new \InvalidArgumentException("Instance of DateTime class not found");
 		}
 
+		if ($endDate < $startDate) {
+			throw new \InvalidArgumentException("End date cannot be before start date");
+		}
+
 		if(! $location instanceOf Location) {
 			throw new \InvalidArgumentException("Instance of Location class not found");
 		}
@@ -25,8 +29,6 @@ class ItineraryItem
 		$this->startDate = $startDate;
 		$this->endDate = $endDate;
 		$this->location = $location;
-
-		$this->activityList[] = "Sting Festival";
 	}
 
 	public function getStartDate()

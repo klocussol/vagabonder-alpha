@@ -3,6 +3,7 @@
 namespace Vagabonder\Domain;
 
 use Vagabonder\Domain\Trip\Itinerary;
+use Vagabonder\Domain\Trip\Itinerary\ItineraryItem;
 
 class Trip 
 {
@@ -38,5 +39,21 @@ class Trip
 	public function getBudget()
 	{
 		return $this->budget;
-	} 
+	}
+
+	public function getTripDuration()
+	{
+		$itinerary = $this->getItinerary();
+		$itineraryItems = $itinerary->getItineraryDetails();
+
+		$firstItinerayItem = $itineraryItems[0];
+		$lastItinerayItem = $itineraryItems[count($itineraryItems) - 1];
+
+		$startDate = $firstItinerayItem->getStartDate();
+		$endDate = $lastItinerayItem->getEndDate();
+
+		$duration = $endDate->diff($startDate);
+
+		return $duration->d + 1;
+	}
 }
