@@ -13,10 +13,10 @@ Feature: my first feature
 	Scenario: Set travel location and dates
 		Given I am on the homepage
 		When I fill in "destination" with "Croatia"
-		And I fill in "start-date" with "2013-07-04"
-		And I fill in "end-date" with "2013-07-14"
+		And I fill in "start-date" with "2013-07-11"
+		And I fill in "end-date" with "2013-07-24"
 		And I press "submit"
-		Then I should see "You're traveling to Croatia in 10 days, have fun!"
+		Then I should see "You're traveling to Croatia in 9 days, have fun!"
 		And I should not see "Destination"
 		And I should not see "Leaving"
 		And I should not see "Returning"

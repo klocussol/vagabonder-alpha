@@ -4,5 +4,4 @@
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 
-<h3>Your trip: <?php echo $name ?></h3>
-<p>Starts in <?php echo $timeUntilHumanReadble ?></p> 
+<h3>You're traveling to <?php echo $name ?>  <?php echo $timeUntilHumanReadble ?>, have fun!</h3> 

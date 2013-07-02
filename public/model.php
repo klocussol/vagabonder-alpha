@@ -30,18 +30,27 @@ class Trip
 
 	public function getTimeUntilHumanReadable()
 	{
-		$startDate = new DateTime($this->startDate);
-		$currentDate = new DateTime();
-		$difference = $startDate->diff($currentDate);
+		$startDate = new DateTime($this->startDate, new DateTimeZone('AMERICA/New_York'));
+		$currentDate = new DateTime("now", new DateTimeZone('AMERICA/New_York'));
+		$difference = $startDate->diff($currentDate)->d;
 
 		var_dump($difference);
+		var_dump($currentDate);
+		var_dump($startDate);
 
-		if($difference == 0) {
-			return "now";
-		} else if($difference == 1) {
-			return $difference . " day";
+		$startDay = $startDate->format("d");
+		$currentDay = $currentDate->format("d");
+		$sameDay = ($startDay == $currentDay);
+		var_dump($startDay);
+		var_dump($currentDay);
+		var_dump($sameDay);
+
+		if($difference == 0 && ($startDate->format("d") == $currentDate->format("d"))) {
+			return "today";
+		} else if(($difference == 0 && ($startDate->format("d") != $currentDate->format("d"))) || ($difference == 1)) {
+			return "tomorrow";
 		} else {
-			return $difference . " days";
+			return "in " . ++$difference . " days";
 		}
 	}
 }
