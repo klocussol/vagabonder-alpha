@@ -30,15 +30,14 @@ class FeatureContext extends MinkContext
         // Initialize your context here
     }
 
-//
-// Place your definition and hook methods here:
-//
-//    /**
-//     * @Given /^I have done something with "([^"]*)"$/
-//     */
-//    public function iHaveDoneSomethingWith($argument)
-//    {
-//        doSomethingWith($argument);
-//    }
-//
+/**
+* @Given /^I fill in "([^"]*)" with the date "([^"]*)" days? from today$/
+*/
+public function iFillInWithTheDateDaysFromToday($field, $days)
+{
+    $currentDate = new DateTime("now", new DateTimeZone('AMERICA/New_York'));
+    $relativeDate = $currentDate->add(new DateInterval("P".$days."D"));
+    $this->getSession()->getPage()->fillField($field, $relativeDate->format('Y-m-d'));
+}
+
 }

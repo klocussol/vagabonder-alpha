@@ -1,9 +1,28 @@
 <?php
 
 require "model.php";
+require "TripRepository.php";
+
+function getAllTrips() 
+{
+	$tripRepository = new TripRepository();
+	return $tripRepository->find();
+}
 
 if(empty($_POST)) {
-	include "view-form.php";
+	if(isset($_GET["page"])) {
+		switch($_GET["page"]) {
+			case "upcoming-trips":
+				$trips = getAllTrips();
+				include "view-trips.php";
+				break;
+			case "bonds":
+				include "view-bonds.php";
+				break;
+		}
+	} else {
+		include "view-form.php";
+	}
 } else {
 
 	$test = $_POST["destination"];

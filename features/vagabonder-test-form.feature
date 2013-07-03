@@ -10,13 +10,24 @@ Feature: my first feature
 		And I should see "Leaving"
 		And I should see "Returning"
 
-	Scenario: Set travel location and dates
+	Scenario: I will know in how many days my trip is
 		Given I am on the homepage
 		When I fill in "destination" with "Croatia"
-		And I fill in "start-date" with "2013-07-11"
-		And I fill in "end-date" with "2013-07-24"
+		And I fill in "start-date" with the date "4" days from today
+		And I fill in "end-date" with the date "10" days from today
 		And I press "submit"
-		Then I should see "You're traveling to Croatia in 9 days, have fun!"
+		Then I should see "You're traveling to Croatia in 4 days, have fun!"
 		And I should not see "Destination"
 		And I should not see "Leaving"
 		And I should not see "Returning"
+
+	Scenario: I will know that my trip starts tomorrow
+		Given I am on the homepage
+		When I fill in "destination" with "Croatia"
+		And I fill in "start-date" with the date "1" day from today
+		And I fill in "end-date" with the date "10" days from today
+		And I press "submit"
+		Then I should see "You're traveling to Croatia tomorrow, have fun!"
+		And I should not see "Destination"
+		And I should not see "Leaving"
+		And I should not see "Returning"	

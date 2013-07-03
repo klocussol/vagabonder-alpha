@@ -7,6 +7,18 @@
 <h1>Wanna vagabond?</h1>
 	
 	<div class="large-12 columns">
+
+		<div class="large-12 left">
+			<nav>
+				<ul>
+					<li class="left"><a href="/?page=bonds">64<br />Bonds</a></li>
+					<li class="left"><a href="/?page=upcoming-trips">3<br />Upcoming Trips</a></li>
+					<li class="left"><a href="#">15<br />Footprints</a></li>
+					<li class="left"><a href="#">21<br />Comments</a></li>
+					<li class="left"><a href="#">54<br />Uploads</a></li>
+				</ul>
+			</nav>
+		</div>
 		<form class="custom" name="vagabonder-form" action="/" method="post">
 			<div class="large-4">
 		    	<label for="destination">Destination:</label>
