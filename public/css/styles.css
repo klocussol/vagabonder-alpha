@@ -1,0 +1,169 @@
+/* General styles 
+----------------------------------------------------------------------------*/
+ 
+ul li {
+ 	list-style: none;
+ }
+
+ .clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+
+
+/* Header Styling
+--------------------------------------------------------------*/
+
+header section ul li a {
+	font-family: "Caviar Dreams";
+}
+
+header nav ul li h1 a {
+	font-family: "Coneria Script Demo";
+}
+
+a.button img {
+	widht: 75%;
+	height: 75%;
+}
+
+.top-bar form input, .top-bar form .button {
+	margin-top: -2px;
+}
+
+
+/* Main Content Styling
+---------------------------------------------------------------*/
+
+#main-content {
+	margin: 0 auto;
+	margin-top: 4em;
+	width: 1024px;
+}
+
+#main-content header div.left:nth-child(2) {
+	margin-left: 20px;
+}
+
+#main-content header div p {
+	margin-left: 5px;
+}
+
+#nationality img, #languages img {
+	width: 15%;
+	margin-left: 0.3em;
+}
+
+#user-icons {
+	margin: 0 auto;
+}
+
+#user-icons img:first-child {
+	margin-left: 0.5em;
+}
+
+/* Navigation Styling
+---------------------------------------------------------------*/
+
+#profile nav ul li {
+	width: 20%;
+	text-align: center;
+}
+
+#profile nav {
+	height: 3.5em;
+	margin-bottom: 2em;
+	display: block;
+}
+
+#profile nav ul li:hover {
+	border: solid 1px #222; 	
+	border-radius: 5px;
+}
+
+#profile nav ul li a:hover {
+	color: #222;
+}
+
+
+/* Main Profile Area Styling
+----------------------------------------------------------------*/
+
+.hide {
+	display: none;
+}
+
+.show {
+	display: block;
+}
+
+/* Main Bonds Area Styling
+-----------------------------------------------------------------*/
+
+#find-traveler div:first-child > h3, #find-traveler div:first-child > h4 {
+	text-align: center;
+	color: #fff;
+}
+
+#find-traveler div.panel {
+	margin-top: 20px;
+}
+
+#find-traveler div:nth-child(2) section div a {
+	text-align: center;
+}
+
+#find-traveler div:nth-child(2) section div a h3 {
+	color: #fff;
+}
+
+#find-traveler div:nth-child(2) section div a img {
+	position: relative;
+	top: -0.45em;
+}
+
+#find-traveler div:nth-child(2) section div a h3, #find-traveler div:nth-child(2) section div a img {
+	display: inline;
+}
+
+#find-traveler div:nth-child(2) section div h4 {
+	text-align: center;
+}
+
+/* Forms 
+--------------------------------------------------------------------*/
+
+#find-traveler form fieldset div.large-1 {
+	margin-left: 1em;
+}
+
+#find-traveler form fieldset > div:nth-child(3), #find-traveler form fieldset > div:nth-child(2) {
+	margin-left: 5em
+}
+
+#num-of-travelers, #num-of-travelers-wanted, #age-range {
+	margin-top: 2em;
+}
+
+#num-of-travelers {
+	display: block;
+	clear: both;
+}
+
+#num-of-travelers-wanted, #age-range {
+	margin-left: 5em;
+}
+
+#age-range > div:nth-child(3) {
+	margin-left: 2em;
+}
+
+

@@ -2,7 +2,6 @@
 
 class TripRepository
 {
-
 	private $databaseHandle;
 
 	public function __construct()

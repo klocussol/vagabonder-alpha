@@ -1,12 +1,20 @@
 <?php
 
 require "model.php";
+require "model-user.php";
 require "TripRepository.php";
+require "UserRepository.php";
 
 function getAllTrips() 
 {
 	$tripRepository = new TripRepository();
 	return $tripRepository->find();
+}
+
+function getAllUsers()
+{
+	$userRepository = new UserRepository();
+	return $userRepository->find();
 }
 
 if(empty($_POST)) {
@@ -18,6 +26,10 @@ if(empty($_POST)) {
 				break;
 			case "bonds":
 				include "view-bonds.php";
+				break;
+			case "all-users":
+				$users = getAllUsers();
+				include "view-all-users.php";
 				break;
 		}
 	} else {

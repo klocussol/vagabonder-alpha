@@ -34,16 +34,8 @@ class Trip
 		$currentDate = new DateTime("now", new DateTimeZone('AMERICA/New_York'));
 		$difference = $startDate->diff($currentDate)->d;
 
-		var_dump($difference);
-		var_dump($currentDate);
-		var_dump($startDate);
-
 		$startDay = $startDate->format("d");
 		$currentDay = $currentDate->format("d");
-		$sameDay = ($startDay == $currentDay);
-		var_dump($startDay);
-		var_dump($currentDay);
-		var_dump($sameDay);
 
 		if($difference == 0 && ($startDate->format("d") == $currentDate->format("d"))) {
 			return "today";
