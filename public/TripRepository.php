@@ -10,6 +10,7 @@ class TripRepository
 		$dbuser = "root";
 		
 		$this->databaseHandle = new PDO($dsn, $dbuser);
+		$this->databaseHandle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 
 	public function find() 
@@ -19,5 +20,15 @@ class TripRepository
 			$trips[] = new Trip($row["name"], new DateTime($row["start_date"]), new DateTime($row["end_date"]));
 		}
 		return $trips;
+	}
+
+	public function save($trip)
+	{
+		$name = $trip->getName();
+		$startDate = $trip->getStartDate();
+		$endDate = $trip->getEndDate();
+
+		$sql = "INSERT INTO basic_mvc.trip (name, start_date, end_date) VALUES ('$name', '$startDate', '$endDate')";
+		return $this->databaseHandle->query($sql);
 	}
 }

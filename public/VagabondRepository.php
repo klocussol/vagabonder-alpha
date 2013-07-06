@@ -1,6 +1,6 @@
 <?php
 
-class UserRepository
+class VagabondRepository
 {
 	private $databaseHandle;
 
@@ -16,8 +16,8 @@ class UserRepository
 	{
 		$sql = "SELECT * FROM basic_mvc.user";
 		foreach($this->databaseHandle->query($sql) as $row) {
-			$users[] = new Vagabond($row["name"], $row["gender"], new DateTime($row["birthday"]));
+			$vagabonds[] = new Vagabond($row["name"], $row["gender"], new DateTime($row["birthday"]));
 		}
-		return $users;
+		return $vagabonds;
 	}
 }

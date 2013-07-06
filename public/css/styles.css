@@ -43,17 +43,17 @@ a.button img {
 /* Main Content Styling
 ---------------------------------------------------------------*/
 
-#main-content {
+.main-content {
 	margin: 0 auto;
 	margin-top: 4em;
 	width: 1024px;
 }
 
-#main-content header div.left:nth-child(2) {
+.main-content header div.left:nth-child(2) {
 	margin-left: 20px;
 }
 
-#main-content header div p {
+.main-content header div p {
 	margin-left: 5px;
 }
 

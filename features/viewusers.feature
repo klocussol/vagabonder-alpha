@@ -8,3 +8,4 @@ Feature: View all users' basic info
 		When I follow "Check out"
 		And I follow "Both"
 		Then I should see "All users"
+		And I should see "Kyoko Locussol"

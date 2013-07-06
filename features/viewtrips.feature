@@ -5,7 +5,8 @@ Feature: View all upcoming trips
 
 	Scenario: I can navigate to the trips page
 		Given I am on homepage
-		When I follow "Upcoming Trips"
+		When I follow "My profile"
+		And I follow "Upcoming Trips"
 		Then I should see "All upcoming trips"
 
 	Scenario: I can see all of my upcoming trips

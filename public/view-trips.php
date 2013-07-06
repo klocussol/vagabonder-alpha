@@ -1,3 +1,5 @@
+<?php renderNav(); ?>
+
 <?php
 echo "All upcoming trips";
 ?>

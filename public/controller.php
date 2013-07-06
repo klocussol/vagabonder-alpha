@@ -1,9 +1,21 @@
 <?php
-
 require "model.php";
 require "model-user.php";
 require "TripRepository.php";
-require "UserRepository.php";
+require "VagabondRepository.php";
+?>
+
+<head>
+	<title>Vagabonder</title>
+	<link rel="stylesheet" href="css/foundation.css" />
+	<link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<?php
+function renderNav()
+{
+	include "partial-nav.php";
+}
 
 function getAllTrips() 
 {
@@ -11,10 +23,10 @@ function getAllTrips()
 	return $tripRepository->find();
 }
 
-function getAllUsers()
+function getAllVagabonds()
 {
-	$userRepository = new UserRepository();
-	return $userRepository->find();
+	$vagabondRepository = new VagabondRepository();
+	return $vagabondRepository->find();
 }
 
 if(empty($_POST)) {
@@ -28,22 +40,29 @@ if(empty($_POST)) {
 				include "view-bonds.php";
 				break;
 			case "all-users":
-				$users = getAllUsers();
-				include "view-all-users.php";
+				$vagabonds = getAllVagabonds();
+				include "view-vagabonds.php";
+				break;
+			case "new-trip":
+				include "view-form.php";
+				break;
+			case "my-profile":
+				include "view-profile.php";
 				break;
 		}
 	} else {
-		include "view-form.php";
+		include "view-home.php";
 	}
 } else {
 
-	$test = $_POST["destination"];
+	$trip = new Trip($_POST["destination"], $_POST["start-date"], $_POST["end-date"]);
+	$tripRepository = new TripRepository();
 
-	$trip = new Trip($test, $_POST["start-date"], $_POST["end-date"]);
+	$saveResult = $tripRepository->save($trip);
 
-	$name = $trip->getName();
-	$timeUntilHumanReadble = $trip->getTimeUntilHumanReadable();
+	if($saveResult) {
+		$trips = getAllTrips();
+		include "view-trips.php";
+	}
 
-
-	include "view-result.php";
 }

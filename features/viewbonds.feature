@@ -5,5 +5,6 @@ Feature: View all bonds
 
 	Scenario: I can navigate to the bonds page
 		Given I am on homepage
-		When I follow "Bonds"
+		When I follow "My profile"
+		And I follow "Bonds"
 		Then I should see "All bonds"
