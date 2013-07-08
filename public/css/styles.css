@@ -33,6 +33,7 @@ header nav ul li h1 a {
 a.button img {
 	widht: 75%;
 	height: 75%;
+	margin-top: 0.3em;
 }
 
 .top-bar form input, .top-bar form .button {
@@ -42,12 +43,6 @@ a.button img {
 
 /* Main Content Styling
 ---------------------------------------------------------------*/
-
-.main-content {
-	margin: 0 auto;
-	margin-top: 4em;
-	width: 1024px;
-}
 
 .main-content header div.left:nth-child(2) {
 	margin-left: 20px;
@@ -141,12 +136,24 @@ a.button img {
 /* Forms 
 --------------------------------------------------------------------*/
 
-#find-traveler form fieldset div.large-1 {
-	margin-left: 1em;
+.section-container > section .title a {
+	background-color: rgba(135, 232, 217, 0.7);
+}
+
+.section-container > section .title a.active {
+	background-color: rgba(135, 232, 217, 1);	
+}
+
+.section-container > section .title a.hover {
+	background-color: rgba(135, 232, 217, 1);	
+}
+
+#find-traveler form fieldset div.large-2 {
+	margin-left: 2em;
 }
 
 #find-traveler form fieldset > div:nth-child(3), #find-traveler form fieldset > div:nth-child(2) {
-	margin-left: 5em
+	margin-left: 2em
 }
 
 #num-of-travelers, #num-of-travelers-wanted, #age-range {
@@ -166,4 +173,47 @@ a.button img {
 	margin-left: 2em;
 }
 
+.radius.button {
+	padding: 0.5em;
+}
+
+form {
+	font-size: 115%;
+}
+
+#find-traveler .panel {
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+}
+
+#find-traveler h1 {
+	color: #aaa;
+	font-family: "Print Clearly";
+	text-align: center;
+}
+
+/* Upcoming Trips 
+---------------------------------------------------------------------------------*/
+
+.section-container section p.title > a form {
+	display: inline;
+	position: relative;
+}
+
+a.update, a.delete {
+	display: inline-block;
+	padding: 0.5em;
+	margin: 0;
+	position: absolute;
+	right: 1em;
+	top: 0.32em;
+}
+
+a.update {
+	right: 5.5em;
+}
+
+a.update:hover, a.delete:hover {
+	background-color: #f9f9f9;
+}
 

@@ -14,3 +14,5 @@
 		</ul>
 	<div>
 </div>
+
+<?php renderScript(); ?>

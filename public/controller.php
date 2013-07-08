@@ -17,6 +17,11 @@ function renderNav()
 	include "partial-nav.php";
 }
 
+function renderScript()
+{
+	include "partial-script.php";
+}
+
 function getAllTrips() 
 {
 	$tripRepository = new TripRepository();
@@ -49,13 +54,15 @@ if(empty($_POST)) {
 			case "my-profile":
 				include "view-profile.php";
 				break;
+			case "home":
+				include "view-home.php";
+				break;
 		}
 	} else {
 		include "view-home.php";
 	}
-} else {
-
-	$trip = new Trip($_POST["destination"], $_POST["start-date"], $_POST["end-date"]);
+} else if(isset($_POST["destination"])) {
+	$trip = new Trip($_POST["destination"], new DateTime($_POST["start-date"]), new DateTime($_POST["end-date"]));
 	$tripRepository = new TripRepository();
 
 	$saveResult = $tripRepository->save($trip);
@@ -64,5 +71,22 @@ if(empty($_POST)) {
 		$trips = getAllTrips();
 		include "view-trips.php";
 	}
+} else {
+	$n = 1;
+	while(!(array_key_exists($n, $_POST))) {
+		$n++;
+	}
 
+	echo $n;
+
+	$tripRepository = new TripRepository();
+
+	$result = $tripRepository->delete($n);
+
+	var_dump($result);
+
+	$trips = $tripRepository->find();
+	include "view-trips.php";
+	
 }
+

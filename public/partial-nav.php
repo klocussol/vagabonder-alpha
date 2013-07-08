@@ -2,7 +2,7 @@
 	<nav class="top-bar">
 		<ul class="title-area">
 			<li class="name">
-				<h1><a href="#">Vagabonder</a>
+				<h1><a href="/?page=home">Vagabonder</a>
 			</li>
 			<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
 		</ul>

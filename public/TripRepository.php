@@ -31,4 +31,10 @@ class TripRepository
 		$sql = "INSERT INTO basic_mvc.trip (name, start_date, end_date) VALUES ('$name', '$startDate', '$endDate')";
 		return $this->databaseHandle->query($sql);
 	}
+
+	public function delete($tripId)
+	{
+		$sql = "DELETE FROM basic_mvc.trip WHERE id = $tripId";
+		$this->databaseHandle->query($sql);
+	}
 }

@@ -13,3 +13,5 @@
 		</nav>
 	</div>
 </div>
+
+<?php renderScript(); ?>
